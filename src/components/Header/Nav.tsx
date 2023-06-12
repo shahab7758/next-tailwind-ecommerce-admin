@@ -1,12 +1,21 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
 import React from "react";
 
 type Props = {};
 
 export default function Nav({}: Props) {
+  const router = useRouter();
+  const { pathname } = router;
+  const inactiveLink = "flex  gap-1";
+  const activeLink = `${inactiveLink}  bg-white text-blue-900 rounded-l-lg`;
+
+  const activeLinkStatus = (path: string) => {
+    return pathname.includes(path) ? activeLink : inactiveLink;
+  };
   return (
-    <aside className=" p-4">
-      <Link href={"/"} className="flex p-2 gap-2">
+    <aside className="text-white p-4 pr-0 ">
+      <Link href={"/"} className="flex  gap-1 mb-4  mr-2">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -24,16 +33,18 @@ export default function Nav({}: Props) {
         </svg>
         <span className="text-white">EcommerceAdmin</span>
       </Link>
-      <nav className=" flex flex-col  gap-10">
-        <Link href={"/"} className="gap-1 flex">
+      <nav className=" flex flex-col  gap-2">
+        <Link
+          href={"/"}
+          className={pathname === "/" ? activeLink : inactiveLink}
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
             stroke-width="1.5"
             stroke="currentColor"
-            className="w-6 h-6"
-            style={{ width: "30px", height: "30px" }}
+            className="w-4 h-4"
           >
             <path
               stroke-linecap="round"
@@ -43,14 +54,14 @@ export default function Nav({}: Props) {
           </svg>
           Dashboard
         </Link>
-        <Link href={"/"} className="flex gap-1">
+        <Link href={"/products"} className={activeLinkStatus("/products")}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
-            className="w-6 h-6"
+            className="w-4 h-4"
             style={{ width: "30px", height: "30px" }}
           >
             <path
@@ -61,14 +72,14 @@ export default function Nav({}: Props) {
           </svg>
           Products
         </Link>
-        <Link href={"/"} className="flex gap-1">
+        <Link href={"/orders"} className={activeLinkStatus("/orders")}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
             stroke-width="1.5"
             stroke="currentColor"
-            className="w-6 h-6"
+            className="w-4 h-4"
             style={{ width: "30px", height: "30px" }}
           >
             <path
@@ -79,14 +90,14 @@ export default function Nav({}: Props) {
           </svg>
           Orders
         </Link>
-        <Link href={"/"} className="flex gap-1">
+        <Link href={"/settings"} className={activeLinkStatus("/settings")}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
             stroke-width="1.5"
             stroke="currentColor"
-            className="w-6 h-6"
+            className="w-4 h-4"
             style={{ width: "30px", height: "30px" }}
           >
             <path
