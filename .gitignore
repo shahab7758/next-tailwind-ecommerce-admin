@@ -6,6 +6,9 @@
 .pnp.js
 .env
 
+pnpm-lock.yaml
+.vscode/
+
 # testing
 /coverage
 
