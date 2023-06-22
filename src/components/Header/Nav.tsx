@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import React from "react";
 
 type Props = {};
@@ -11,7 +11,7 @@ export default function Nav({}: Props) {
   const activeLink = `${inactiveLink}  bg-white text-blue-900 rounded-l-lg`;
 
   const activeLinkStatus = (path: string) => {
-    return pathname.includes(path) ? activeLink : inactiveLink;
+    return pathname?.includes(path) ? activeLink : inactiveLink;
   };
   return (
     <aside className="text-white p-4 pr-0 ">

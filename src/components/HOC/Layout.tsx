@@ -1,7 +1,8 @@
+"use client";
 import { useSession, signIn, signOut } from "next-auth/react";
 import Nav from "../Header/Nav";
 
-export default function Layout({ children }) {
+export default function Layout({ children }: any) {
   const { data: session } = useSession();
   if (!session) {
     return (

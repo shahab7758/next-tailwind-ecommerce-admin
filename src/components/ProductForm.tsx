@@ -1,7 +1,7 @@
 import Layout from "@/components/HOC/Layout";
 import React, { useState } from "react";
 import axios from "axios";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 type Props = {
   _id: string;
   title: string;

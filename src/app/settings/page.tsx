@@ -4,9 +4,5 @@ import React from "react";
 type Props = {};
 
 export default function settings({}: Props) {
-  return (
-    <Layout>
-      <div>settings</div>
-    </Layout>
-  );
+  return <div>settings</div>;
 }

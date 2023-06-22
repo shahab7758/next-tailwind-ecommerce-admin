@@ -1,3 +1,4 @@
+"use client";
 import Layout from "@/components/HOC/Layout";
 import axios from "axios";
 import Link from "next/link";
@@ -13,7 +14,7 @@ export default function Products({}: Props) {
     });
   }, []);
   return (
-    <Layout>
+    <>
       <Link
         className="bg-blue-900 text-white rounded-md py-1 px-2"
         href={"/products/new"}
@@ -71,6 +72,6 @@ export default function Products({}: Props) {
           ))}
         </tbody>
       </table>
-    </Layout>
+    </>
   );
 }

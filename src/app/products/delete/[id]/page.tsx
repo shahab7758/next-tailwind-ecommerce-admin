@@ -1,13 +1,14 @@
-import Layout from "@/components/HOC/Layout";
+"use client";
 import axios from "axios";
-import { useRouter } from "next/router";
+import { useParams, useRouter } from "next/navigation";
+
 import React, { useEffect, useState } from "react";
 
 type Props = {};
 
 export default function DeleteProduct({}: Props) {
   const router = useRouter();
-  const { id } = router.query;
+  const { id } = useParams();
   const [productInfo, setProductInfo] = useState<any>();
   useEffect(() => {
     axios.get("/api/products?id=" + id).then((response) => {
@@ -25,7 +26,7 @@ export default function DeleteProduct({}: Props) {
   };
 
   return (
-    <Layout>
+    <>
       <h1 className="text-center">
         {`Do you really want to delete "${productInfo?.title}"`}?
       </h1>
@@ -37,6 +38,6 @@ export default function DeleteProduct({}: Props) {
           No
         </button>
       </div>
-    </Layout>
+    </>
   );
 }

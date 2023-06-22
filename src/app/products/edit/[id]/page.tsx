@@ -1,15 +1,15 @@
-import Layout from "@/components/HOC/Layout";
+"use client";
+
 import ProductForm from "@/components/ProductForm";
 import axios from "axios";
-import { useRouter } from "next/router";
+import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 type Props = {};
 
 export default function EditProduct({}: Props) {
-  const router = useRouter();
+  const { id } = useParams();
   const [productInfo, setProductInfo] = useState<{}>();
-  const { id } = router.query;
   useEffect(() => {
     if (!id) {
       return;
@@ -19,9 +19,9 @@ export default function EditProduct({}: Props) {
     });
   }, [id]);
   return (
-    <Layout>
+    <>
       <h1>Edit product</h1>
       {productInfo && <ProductForm {...productInfo} />}
-    </Layout>
+    </>
   );
 }
