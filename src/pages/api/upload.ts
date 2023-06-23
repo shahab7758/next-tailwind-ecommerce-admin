@@ -5,6 +5,7 @@ import multiparty from "multiparty";
 import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import fs from "fs";
 import mime from "mime-types";
+import { env } from "node:process";
 
 type Data = {};
 
@@ -24,8 +25,8 @@ export default async function handler(
   const client = new S3Client({
     region: "ap-southeast-1",
     credentials: {
-      accessKeyId: "AKIASKLUSWGE4O4ERFHY",
-      secretAccessKey: "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",
+      accessKeyId: process.env.S3_ACCESS_KEY,
+      secretAccessKey: process.env.S3_SECRET_ACCESS_KEY,
     },
   });
   const links = [];
