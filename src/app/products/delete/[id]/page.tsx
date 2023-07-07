@@ -8,7 +8,11 @@ type Props = {};
 
 export default function DeleteProduct({}: Props) {
   const router = useRouter();
-  const { id } = useParams();
+
+  const params: any = useParams();
+
+  const { id } = params;
+
   const [productInfo, setProductInfo] = useState<any>();
   useEffect(() => {
     axios.get("/api/products?id=" + id).then((response) => {

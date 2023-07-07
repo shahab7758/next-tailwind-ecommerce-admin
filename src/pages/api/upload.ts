@@ -15,31 +15,45 @@ export default async function handler(
 ) {
   const form = new multiparty.Form();
   const bucketName: string = "next-ecommerce-admin";
-  const { fields, files } = await new Promise((resolve, reject) => {
+  const { fields, files } = await new Promise<any>((resolve, reject) => {
     form.parse(req, (err: any, fields: any, files: string | any[]) => {
       if (err) reject(err);
       resolve({ fields, files });
     });
   });
 
+  const accessKeyId: string | undefined = process.env.S3_ACCESS_KEY;
+  const secretAccessKey: string | undefined = process.env.S3_SECRET_ACCESS_KEY;
+
+  if (!accessKeyId || !secretAccessKey) {
+    throw new Error("S3 access key or secret access key is missing");
+  }
+
   const client = new S3Client({
     region: "ap-southeast-1",
     credentials: {
-      accessKeyId: process.env.S3_ACCESS_KEY,
-      secretAccessKey: process.env.S3_SECRET_ACCESS_KEY,
+      accessKeyId: accessKeyId!,
+      secretAccessKey: secretAccessKey!,
     },
   });
   const links = [];
   for (const file of files.file) {
     const ext = file.originalFilename.split(".").pop();
     const newFilename = Date.now() + "." + ext;
+    const contentType = mime.lookup(file.path);
+
+    if (typeof contentType !== "string") {
+      throw new Error(
+        `Could not determine the content type for file: ${file.path}`
+      );
+    }
     await client.send(
       new PutObjectCommand({
         Bucket: bucketName,
         Key: newFilename,
         Body: fs.readFileSync(file.path),
         ACL: "public-read",
-        ContentType: mime.lookup(file.path),
+        ContentType: contentType,
       })
     );
     const link = `https://${bucketName}.s3.amazonaws.com/${newFilename}`;

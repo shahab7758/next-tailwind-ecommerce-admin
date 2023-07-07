@@ -8,7 +8,7 @@ export default function NewProduct({}: Props) {
   return (
     <>
       <h1>New Product</h1>
-      <ProductForm />
+      <ProductForm _id={""} title={""} description={""} price={0} images={[]} />
     </>
   );
 }

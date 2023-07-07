@@ -1,4 +1,3 @@
-import Layout from "@/components/HOC/Layout";
 import React, { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
@@ -15,16 +14,17 @@ export default function ProductForm({
   title: existingTitle,
   description: existingDescription,
   price: existingPrice,
-  images,
+  images: existingImages,
 }: Props) {
   const [title, setTitle] = useState(existingTitle || "");
   const [description, setDescription] = useState(existingDescription || "");
   const [price, setPrice] = useState(existingPrice || "");
+  const [images, setImages] = useState<any>(existingImages || []);
   const [goToProducts, setGoToProducts] = useState<boolean>(false);
   const router = useRouter();
   const saveProduct = async (e: any) => {
     e.preventDefault();
-    const data = { title, description, price };
+    const data = { title, description, price, images };
     if (_id) {
       // update
       await axios.put("/api/products", { ...data, _id });
@@ -44,9 +44,9 @@ export default function ProductForm({
       for (const file of files) {
         data.append("file", file);
       }
-      const res: any = await fetch("/api/upload", {
-        method: "POST",
-        body: data,
+      const res: any = await axios.post("/api/upload", data);
+      setImages((oldImages: any) => {
+        return [...oldImages, res?.data?.links];
       });
       console.log("object", res?.data);
     }
@@ -61,7 +61,13 @@ export default function ProductForm({
         onChange={(e) => setTitle(e.target.value)}
       />
       <label>Photos</label>
-      <div className="mb-2">
+      <div className="mb-2 flex gap-2 flex-wrap">
+        {!!images?.length &&
+          images.map((link: string) => (
+            <div key={link} className="h-24">
+              <img src={link} alt="Product" className="rounded-lg" />
+            </div>
+          ))}
         <label className="w-24 h-24 cursor-pointer flex text-center items-center justify-center gap-1 text-sm text-gray-500 bg-gray-200 rounded-md">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -80,6 +86,7 @@ export default function ProductForm({
           <div>Upload</div>
           <input type="file" onChange={uploadImages} className="hidden" />
         </label>
+        {!images?.length && <p>No photos in this product </p>}
       </div>
       <label> Description</label>
       <textarea

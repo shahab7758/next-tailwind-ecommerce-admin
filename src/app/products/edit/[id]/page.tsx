@@ -8,8 +8,9 @@ import React, { useEffect, useState } from "react";
 type Props = {};
 
 export default function EditProduct({}: Props) {
-  const { id } = useParams();
-  const [productInfo, setProductInfo] = useState<{}>();
+  const params: any = useParams();
+  const { id } = params;
+  const [productInfo, setProductInfo] = useState<any>(null);
   useEffect(() => {
     if (!id) {
       return;
@@ -18,10 +19,21 @@ export default function EditProduct({}: Props) {
       setProductInfo(response?.data);
     });
   }, [id]);
+
+  const { _id, title, description, price, images } = productInfo;
+
   return (
     <>
       <h1>Edit product</h1>
-      {productInfo && <ProductForm {...productInfo} />}
+      {productInfo && (
+        <ProductForm
+          _id={_id}
+          title={title}
+          description={description}
+          price={price}
+          images={images}
+        />
+      )}
     </>
   );
 }

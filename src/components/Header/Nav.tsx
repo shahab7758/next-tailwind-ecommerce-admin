@@ -5,7 +5,7 @@ import React from "react";
 type Props = {};
 
 export default function Nav({}: Props) {
-  const router = useRouter();
+  const router: any = useRouter();
   const { pathname } = router;
   const inactiveLink = "flex  gap-1";
   const activeLink = `${inactiveLink}  bg-white text-blue-900 rounded-l-lg`;
