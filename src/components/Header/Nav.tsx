@@ -33,7 +33,7 @@ export default function Nav({}: Props) {
         </svg>
         <span className="text-white">EcommerceAdmin</span>
       </Link>
-      <nav className=" flex flex-col  gap-2">
+      <nav className=" flex flex-col  gap-2 ">
         <Link
           href={"/"}
           className={pathname === "/" ? activeLink : inactiveLink}
@@ -45,6 +45,7 @@ export default function Nav({}: Props) {
             stroke-width="1.5"
             stroke="currentColor"
             className="w-4 h-4"
+            style={{ width: "30px", height: "30px" }}
           >
             <path
               stroke-linecap="round"

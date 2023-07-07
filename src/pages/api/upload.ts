@@ -32,8 +32,8 @@ export default async function handler(
   const client = new S3Client({
     region: "ap-southeast-1",
     credentials: {
-      accessKeyId: accessKeyId!,
-      secretAccessKey: secretAccessKey!,
+      accessKeyId: accessKeyId,
+      secretAccessKey: secretAccessKey,
     },
   });
   const links = [];
